@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Aid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+
+<script>
+    // 🔧 Replace with your Firebase project details
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Modal open/close
+    function openModal() {
+        document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+
+    // 🔐 User registration
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitBtn = document.querySelector('.submit-btn');
+
+        submitBtn.addEventListener('click', () => {
+            const name = document.querySelector('input[placeholder="Name"]').value;
+            const email = document.querySelector('input[placeholder="Email"]').value;
+            const password = document.querySelector('input[placeholder="Password"]').value;
+
+            if (!email || !password || !name) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    user.updateProfile({
+                        displayName: name
+                    });
+
+                    alert("Registration successful! Welcome, " + name);
+                    closeModal();
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('nav a[data-target]');
+        const sections = document.querySelectorAll('section');
+
+        // Show only the first section by default
+        sections.forEach(section => section.classList.add('hidden-section'));
+        document.getElementById('about').classList.remove('hidden-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+
+                sections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.remove('hidden-section');
+                        section.classList.add('active-section');
+                    } else {
+                        section.classList.remove('active-section');
+                        section.classList.add('hidden-section');
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<body>
+    <header>
+        <h1>Firselp</h1>
+        <nav>
+            <a href="#" data-target="about">About</a>
+            <a href="#" data-target="help">Help</a>
+            <a href="#" data-target="contact">Contact</a>
+            <a href="#" data-target="download">App</a>
+            <button class="register-btn" onclick="openModal()">Register</button>
+        </nav>
+    </header>
+
+    <!-- <section id="download">
+        <h2>Download Our App</h2>
+        <p>Available for all major platforms. Choose yours and start using it now!</p>
+        <div class="download-buttons">
+            <a href="#" class="download-btn">
+                <img src="logo-android.svg" alt="Android" />
+            </a>
+            <a href="#" class="download-btn">
+                <img src="https://cdn.jsdelivr.net/gh/tabler/tabler-icons/icons/brand-apple.svg" alt="iOS" />
+            </a>
+            <a href="#" class="download-btn">
+                <img src="https://cdn.jsdelivr.net/gh/tabler/tabler-icons/icons/brand-windows.svg" alt="Windows" />
+            </a>
+        </div>
+    </section> -->
+
+    <section id="about">
+        <h2>About the App</h2>
+        <p><strong>"First Aid"</strong> is not just a website – it's a digital lifesaver designed to help in critical moments. We created this app with one goal — to make first aid accessible to every Ukrainian, regardless of age, experience, or profession.</p>
+
+        <p>The idea came after our founder witnessed an emergency where people didn't know how to respond. That's when the vision appeared — to build a simple, intuitive platform that teaches and guides in real-time.</p>
+
+        <h3>🔍 What’s in the app?</h3>
+        <ul>
+            <li>📖 Step-by-step instructions for 20+ emergencies</li>
+            <li>📸 Illustrations and clear diagrams</li>
+            <li>📹 Video tutorials from certified instructors</li>
+            <li>📲 Offline functionality (coming soon)</li>
+            <li>🆘 Quick-access button for critical information</li>
+        </ul>
+
+        <h3>🌍 Our Vision</h3>
+        <p>We aim to build a culture of responsibility — where everyone is ready to help others. In emergencies, simple actions save lives. And we want to teach this to millions.</p>
+
+        <h3>🤝 We Welcome Cooperation</h3>
+        <p>If you're a medical professional, volunteer, or just a caring person — contact us. Together we can teach more people how to provide first aid.</p>
+
+        <h3>Thank you for choosing safety!</h3>
+    </section>
+    <!--
+    <section id="help">
+        <h2>What to Do?</h2>
+        <ul>
+            <li>❗ Cardiac arrest — CPR (compressions + breathing)</li>
+            <li>🔥 Burns — cold water for 10 minutes</li>
+            <li>🩸 Bleeding — press wound with cloth</li>
+            <li>🧠 Unconscious — check breathing, place on side</li>
+            <li>🦴 Fracture — immobilize, don’t move</li>
+            <li>🦂 Bite — apply ice, monitor for allergy</li>
+            <li>☠️ Poisoning — don’t induce vomiting, call ambulance</li>
+            <li>🌡️ Heatstroke — move to shade, apply cold compresses</li>
+            <li>⚡ Electric shock — turn off source, don’t touch with hands</li>
+            <li>🤕 Concussion — rest, cold on head, seek medical help</li>
+            <li>🤢 Nausea/vomiting — lay on side</li>
+            <li>🐍 Snake bite — don’t suck venom, no tourniquet, stay calm</li>
+            <li>👃 Nosebleed — tilt head forward, pinch nostrils</li>
+            <li>❄️ Hypothermia — warm place, dry clothes, warm drink</li>
+            <li>🚗 Car accident — check safety, call 103, give aid</li>
+            <li>💊 Overdose — call ambulance, keep person conscious</li>
+            <li>🫁 Drowning — remove from water, CPR if not breathing</li>
+            <li>🚨 Panic attack — calm them, slow breathing, don’t leave alone</li>
+            <p><strong>And much more in our app — learn to give first aid using VR or AR directly on your phone.</strong></p>
+        </ul>
+    </section>
+    -->
+
+    <!-- <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: help@firstaid.ua</p>
+    </section> -->
+
+    <footer>
+        <p>&copy; 2025 Tyshchenko team</p>
+    </footer>
+
+    <!--
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Register</h2>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button class="submit-btn">Sign Up</button>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+    </script>
+    -->
+</body>
+
+</html>
