@@ -2,164 +2,146 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firselp</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        html, body {
-            height: 100%;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex: 1;
-        }
-        footer {
-            background: #d32f2f;
-            color: white;
-            text-align: center;
-            padding: 25px;
-            border-top-left-radius: 40px;
-            border-top-right-radius: 40px;
-            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firselp | Documentation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff7f7;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #d32f2f;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 10px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      color: #d32f2f;
+      margin-top: 40px;
+    }
+
+    ul, ol {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    footer {
+      background: #d32f2f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 
-<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
-
-<script>
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const submitBtn = document.querySelector('.submit-btn');
-
-        if (submitBtn) {
-            submitBtn.addEventListener('click', () => {
-                const name = document.querySelector('input[placeholder="Name"]').value;
-                const email = document.querySelector('input[placeholder="Email"]').value;
-                const password = document.querySelector('input[placeholder="Password"]').value;
-
-                if (!email || !password || !name) {
-                    alert("Please fill in all fields.");
-                    return;
-                }
-
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        user.updateProfile({ displayName: name });
-                        alert("Registration successful! Welcome, " + name);
-                        closeModal();
-                    })
-                    .catch((error) => {
-                        alert("Error: " + error.message);
-                    });
-            });
-        }
-
-        const navLinks = document.querySelectorAll('nav a[data-target]');
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => section.classList.add('hidden-section'));
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) aboutSection.classList.remove('hidden-section');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('data-target');
-                sections.forEach(section => {
-                    section.classList.toggle('active-section', section.id === targetId);
-                    section.classList.toggle('hidden-section', section.id !== targetId);
-                });
-            });
-        });
-    });
-
-    function openModal() {
-        const modal = document.getElementById("modal");
-        if (modal) modal.style.display = "flex";
-    }
-
-    function closeModal() {
-        const modal = document.getElementById("modal");
-        if (modal) modal.style.display = "none";
-    }
-</script>
-
 <body>
-    <header>
-        <h1>Firselp</h1>
-        <nav>
-            <a href="#" data-target="about">About</a>
-            <a href="#" data-target="help">How It Works</a>
-            <a href="#" data-target="tech">Technology</a>
-            <a href="#" data-target="future">Future</a>
-        </nav>
-    </header>
+  <header>
+    <h1>Firselp Documentation</h1>
+    <p>Building First Aid For Everyone, Everywhere</p>
+  </header>
 
-    <main>
-        <section id="about">
-            <h2>About the App</h2>
-            <p><strong>Firselp</strong> is a mobile-first solution that teaches first aid with AR, AI, and multimedia tools.</p>
-            <p>Only 1% of people know how to act in emergencies. Our mission is to change that with interactive and practical guidance.</p>
-            <ul>
-                <li>🆘 Emergency and Training modes</li>
-                <li>🧠 Audio, AR, and Text instructions</li>
-                <li>📲 Easy to use — even under stress</li>
-                <li>📱 Works offline</li>
-            </ul>
-        </section>
+  <main>
+    <section>
+      <h2>📌 Project Overview</h2>
+      <p><strong>Firselp</strong> is a mobile-first app that provides first aid guidance using AR (Augmented Reality), AI, and multimedia formats. Only 1% of people know how to deliver first aid properly — Firselp aims to change that.</p>
+    </section>
 
-        <section id="help" class="hidden-section">
-            <h2>How It Works</h2>
-            <ol>
-                <li>Select mode: Emergency or Training</li>
-                <li>Choose the situation: bleeding, CPR, etc.</li>
-                <li>Pick format: Audio, AR, or Text</li>
-                <li>Follow step-by-step guidance in real time</li>
-            </ol>
-        </section>
+    <section>
+      <h2>🧠 Problem Statement</h2>
+      <ul>
+        <li>Traditional training is boring, difficult, and ineffective under stress</li>
+        <li>Thousands of lives could be saved with better knowledge</li>
+        <li>1% of the population knows first aid — mostly professionals</li>
+      </ul>
+    </section>
 
-        <section id="tech" class="hidden-section">
-            <h2>Technologies We Use</h2>
-            <p>Our stack includes:</p>
-            <ul>
-                <li>🧠 GPT (AI assistant)</li>
-                <li>🎨 Canva & Blender (Design)</li>
-                <li>🔹 Unity & AR SDK (App & AR)</li>
-                <li>📁 GitHub (Collaboration)</li>
-            </ul>
-        </section>
+    <section>
+      <h2>🎯 Our Solution</h2>
+      <p><strong>Firselp</strong> is designed for:</p>
+      <ul>
+        <li>🚨 Emergency and training modes</li>
+        <li>🧠 Smart AI and multimedia step-by-step guidance</li>
+        <li>🌍 Accessible anytime, even offline</li>
+        <li>🎮 Interactive AR for immersive learning</li>
+      </ul>
+    </section>
 
-        <section id="future" class="hidden-section">
-            <h2>What's Next?</h2>
-            <ul>
-                <li>🧒 Psychological support & First aid for children</li>
-                <li>🔥 VR simulations (war, fire, disaster)</li>
-                <li>🏥 Partnerships with hospitals & Red Cross</li>
-                <li>📜 Certification after training completion</li>
-            </ul>
-        </section>
-    </main>
+    <section>
+      <h2>👥 Team</h2>
+      <ul>
+        <li><strong>Dmytro Palamarchuk</strong> – CEO</li>
+        <li><strong>Ivan Tyshchenko</strong> – Unity Developer</li>
+        <li><strong>Artem Chmyr</strong> – Unity Developer</li>
+      </ul>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Tyshchenko Team</p>
-    </footer>
+    <section>
+      <h2>💻 Technologies Used</h2>
+      <ul>
+        <li>GPT (AI assistant)</li>
+        <li>Unity & AR SDK (app logic & AR)</li>
+        <li>Canva & Blender (design & 3D)</li>
+        <li>GitHub (collaboration & version control)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📈 Features</h2>
+      <ul>
+        <li>Audio, AR, and text-based guidance</li>
+        <li>Interactive and intuitive UI</li>
+        <li>Offline capability</li>
+        <li>Certification for completed modules (planned)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🌍 UN SDG Alignment</h2>
+      <ul>
+        <li>SDG 3: Good Health & Well-being</li>
+        <li>SDG 4: Quality Education</li>
+        <li>SDG 9: Innovation & Infrastructure</li>
+        <li>SDG 17: Global Partnerships</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🚀 Future Plans</h2>
+      <ul>
+        <li>Psychological and child-specific care modules</li>
+        <li>VR scenarios for high-risk cases</li>
+        <li>Official partnerships (Red Cross, hospitals)</li>
+        <li>Full certification program with benefits</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tyshchenko Team | Firselp Project</p>
+  </footer>
 </body>
 
 </html>
